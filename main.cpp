@@ -33,7 +33,7 @@ void print_array2d(int** array, unsigned row, unsigned col){
 void fill_array2d(int** array, unsigned row, unsigned col){
     for(unsigned i = 0; i < row; i++){
         for(unsigned j = 0; j < col; j++){
-            array[i][j] = (0 + rand() % 9);
+            array[i][j] = (1 + rand() % 99);
         }
     }
 }
@@ -51,7 +51,29 @@ int** transpose(const int* const* m, unsigned rows, unsigned cols){
     return transposeArr;
 }
 
+typedef struct{
+    int min = 0;
+    unsigned row = 0;
+} MinRow;
 
+
+
+void swap_min(int* m[], unsigned rows, unsigned cols){
+    MinRow *minRow = new MinRow;
+    minRow->min = m[0][0];
+    for(unsigned i = 0; i < rows; i++){
+
+        for(unsigned j = 0; j < cols; j++){
+            if(m[i][j] < minRow->min){
+                minRow->min = m[i][j];
+                minRow->row = i;
+            }
+        }
+    }
+    std::cout << minRow->min << " " << minRow->row << std::endl;
+    //m[0] = m[minRow->row];
+    m[minRow->row] = m[0];
+}
 
 int main(){
 
@@ -70,6 +92,8 @@ int main(){
     transpose2d = init_array2d(transpose2d, col, row);
     transpose2d = transpose(array2d, row, col);
 
+    print_array2d(transpose2d, col, row);
+    swap_min(transpose2d, col, row);
     print_array2d(transpose2d, col, row);
 
     return 0;
