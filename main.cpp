@@ -70,9 +70,10 @@ void swap_min(int* m[], unsigned rows, unsigned cols){
             }
         }
     }
-    std::cout << minRow->min << " " << minRow->row << std::endl;
-    //m[0] = m[minRow->row];
+    int* tmp = m[minRow->row];
     m[minRow->row] = m[0];
+    m[0] = tmp;
+    delete minRow;
 }
 
 int main(){
